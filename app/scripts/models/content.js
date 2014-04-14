@@ -33,7 +33,8 @@ D3Interpolator.Models = D3Interpolator.Models || {};
                         d3.rgb(255,255,255),
                         d3.rgb(255, 0, 0))
                 }
-            ] )
+            ] );
+            
         },
 
         defaults: {

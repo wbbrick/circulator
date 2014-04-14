@@ -29,7 +29,7 @@ D3Interpolator.Views = D3Interpolator.Views || {};
 
         render: function () {
             this.$el.html(this.template(this.model.toJSON()));
-            this.display( );
+            this.display();
             return this;
         },
 
@@ -47,35 +47,56 @@ D3Interpolator.Views = D3Interpolator.Views || {};
             return ( num / max) ;
         },
 
+        scalefunc: function ( max, pluck, d ) {
+            return D3Interpolator.app.get('majorMusicTransformArray')[
+                Math.round(d3.interpolate( 0,32 ) (
+                    this.getPercentage(d[pluck], max)))
+            ] || 0;
+        },
+
         createColumn: function(data, attributes){
             var pluck = attributes["pluck"];
-            var interp = attributes["interp"];
+            var colorInterp = attributes["interp"];
 
             var max = this.getMax(data, pluck);
 
+            var scaleinterp = d3.interpolate(1,32);
+
+            var pointToNote = _.bind(
+                _.partial(this.scalefunc, max, pluck),
+                this
+            );
 
             d3.select("#" + pluck).selectAll("div")
                 .data(  data  )
                 .enter()
-                .append("div")
-                .attr("class", "day")
-                .style("width", "100%" )
-                .style("height", "3px" )
-                /*.text( function( d ) {
-                    return d['cleanDate'];
-                } )*/
+                .append( "div" )
+                .attr( "class", "day" )
+                .style( "width", "100%" )
+                //.style( "height", "3px" )
+                //.text( function( d ) {return d.cleanDate; } )
+                .text ( _.bind( pointToNote, this ) )
                 .style("background-color", _.bind( function(d) {
-                    return interp(this.getPercentage(d[pluck], max) );
+                    return colorInterp(this.getPercentage(d[pluck], max) );
                 }, this ) )
             ;
+
+            $('div .day').tipsy({
+                gravity: 'w',
+                //html: true,
+                title: function() {
+                    var d = this.__data__;
+                    return d['cleanDate'];
+                }
+            });
         },
 
         display: function() {
             var data = this.model.get( 'data' ).toJSON();
+            var dataColumn = _.partial(this.createColumn, data);
+
             _.each( this.model.get( 'attributes' ),
-                    _.bind(
-                        _.partial(this.createColumn, data),
-                        this
+                    _.bind(dataColumn, this
                     )
                   );
 /*

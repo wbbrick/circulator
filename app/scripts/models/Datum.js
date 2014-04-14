@@ -19,6 +19,7 @@ D3Interpolator.Models = D3Interpolator.Models || {};
         },
 
         parse: function(response, options)  {
+            response.cleanDate = new Date(response.date).toDateString();
             return response;
         }
     });
