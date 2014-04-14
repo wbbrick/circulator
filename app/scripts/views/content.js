@@ -13,7 +13,7 @@ D3Interpolator.Views = D3Interpolator.Views || {};
 
         tagName: 'div',
 
-        id: '',
+        id: 'content',
 
         className: 'row',
 
@@ -62,8 +62,8 @@ D3Interpolator.Views = D3Interpolator.Views || {};
 
             var scaleinterp = d3.interpolate(1,32);
 
-            var pointToNote = _.bind(
-                _.partial(this.scalefunc, max, pluck),
+            var textFunction = _.bind(
+                _.partial(this.model.get('textGenerator'), max, pluck),
                 this
             );
 
@@ -73,9 +73,9 @@ D3Interpolator.Views = D3Interpolator.Views || {};
                 .append( "div" )
                 .attr( "class", "day" )
                 .style( "width", "100%" )
-                //.style( "height", "3px" )
-                //.text( function( d ) {return d.cleanDate; } )
-                .text ( _.bind( pointToNote, this ) )
+                .style( "height", this.model.get( 'divHeight' ) )
+            //.text( function( d ) {return d.cleanDate; } )
+                .text ( _.bind( textFunction, this ) )
                 .style("background-color", _.bind( function(d) {
                     return colorInterp(this.getPercentage(d[pluck], max) );
                 }, this ) )
@@ -99,12 +99,6 @@ D3Interpolator.Views = D3Interpolator.Views || {};
                     _.bind(dataColumn, this
                     )
                   );
-/*
-            this.createColumn(data, "orangeaverage", d3.rgb(255, 165, 0));
-            this.createColumn(data, "purpleaverage", d3.rgb(128, 0, 128));
-            this.createColumn(data, "greenaverage", d3.rgb(0, 128, 0));
-            this.createColumn(data, "banneraverage", d3.rgb(255, 0, 0));
-*/
         }
 
     });
