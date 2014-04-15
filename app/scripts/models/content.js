@@ -7,15 +7,22 @@ D3Interpolator.Models = D3Interpolator.Models || {};
 
     D3Interpolator.Models.Content = Backbone.Model.extend({
         initialize: function() {
-            this.set( 'textGenerator',
-                    this.noteGenerator)
+            this.set('textGenerator', this.dateGenerator);
+        },
+
+        dateGenerator: function ( max, pluck, d ) {
+            if(d) {
+                return d.cleanDate;
+            }
         },
 
         noteGenerator: function ( max, pluck, d ) {
-            return D3Interpolator.app.get('majorMusicTransformArray')[
-                Math.round(d3.interpolate( 0,32 ) (
-                    this.getPercentage(d[pluck], max)))
-            ] || 0;
+            if(d) {
+                return D3Interpolator.app.get('majorMusicTransformArray')[
+                    Math.round(d3.interpolate( 0,32 ) (
+                        this.getPercentage(d[pluck], max)))
+                ] || 0;
+            }
         },
 
         defaults: {
@@ -44,7 +51,7 @@ D3Interpolator.Models = D3Interpolator.Models || {};
                 }
             ],
             divHeight: 'auto',
-            textGenerator: function( d ) {return d.cleanDate; }
+            textGenerator: function( max, pluck, d ) {return ""; }
         },
 
         validate: function(attrs, options) {
