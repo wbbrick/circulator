@@ -8,7 +8,8 @@
     "modernizr": "~2.7.1",
     "tipsy": "~0.1.7",
     "bootstrap": "~3.1.1",
-    "SoundJS": "https://github.com/CreateJS/SoundJS.git"
+    "SoundJS": "https://github.com/CreateJS/SoundJS.git",
+    "d3": "~3.4.6"
   },
   "devDependencies": {}
 }
