@@ -17,18 +17,30 @@
         var should = chai.should();
     </script>
 
-    <!-- include source files here... -->
+    <!-- include vendor files here... -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/backbone/backbone.js"></script>
+    <script src="bower_components/d3/d3.js"></script>
+    <script src="bower_components/tipsy/src/javascripts/jquery.tipsy.js"></script>
 
-    <script src="test/views/content.js"></script>
-    <script src="test/routers/routes.js"></script>
-    <script src="test/models/app.js"></script>
-    <script src="test/models/content.js"></script>
-    <script src="test/collections/RouteData.js"></script>
-    <script src="test/models/RouteDatum.js"></script>
-    <script src="test/models/header.js"></script>
-    <script src="test/views/header.js"></script>
-    <script src="test/views/ContentOptions.js"></script>
+    <!-- include source files here... -->
+    <script src="scripts/templates.js"></script>
+    <script src="scripts/main.js"></script>
+    <script src="scripts/models/app.js"></script>
+    <script src="scripts/collections/Data.js"></script>
+    <script src="scripts/models/content.js"></script>
+    <script src="scripts/views/content.js"></script>
+    <script src="scripts/routes/routes.js"></script>
+    <script src="scripts/views/ContentOptions.js"></script>
+
     <!-- include spec files here... -->
+    <script src="views/content.spec.js"></script>
+    <script src="routers/routes.spec.js"></script>
+    <script src="models/app.spec.js"></script>
+    <script src="models/content.spec.js"></script>
+    <script src="views/ContentOptions.spec.js"></script>
+
     <script src="spec/test.js"></script>
 
     <script>mocha.run()</script>
