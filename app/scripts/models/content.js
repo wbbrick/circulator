@@ -12,8 +12,9 @@ D3Interpolator.Models = D3Interpolator.Models || {};
 
         dateGenerator: function ( max, pluck, d ) {
             if(d) {
-                return d.cleanDate;
+                return d.cleanDate || '';
             }
+            return '';
         },
 
         noteGenerator: function ( max, pluck, d ) {
@@ -26,7 +27,6 @@ D3Interpolator.Models = D3Interpolator.Models || {};
         },
 
         defaults: {
-            data: new D3Interpolator.Collections.RouteData(),
             attributes: [
                 {
                     "pluck" : "orangeaverage",
