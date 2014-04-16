@@ -15,13 +15,17 @@ D3Interpolator.Views = D3Interpolator.Views || {};
 
         id: 'content',
 
-        className: 'row',
+        className: '',
 
         events: {},
 
         initialize: function () {
+            this.optionsView =
+                new D3Interpolator.Views.ContentOptions( this.model );
+
             this.listenTo(this.model, 'change', this.render);
             this.listenTo(this.model.get( 'data' ), 'reset', this.render);
+
             this.model.get( 'data' ).fetch( {
                 "reset" : true
             });
@@ -30,6 +34,7 @@ D3Interpolator.Views = D3Interpolator.Views || {};
         render: function () {
             this.$el.html(this.template(this.model.toJSON()));
             this.display();
+            this.optionsView.setElement( $("#options") ).render().$el;
             return this;
         },
 
@@ -47,20 +52,11 @@ D3Interpolator.Views = D3Interpolator.Views || {};
             return ( num / max) ;
         },
 
-        scalefunc: function ( max, pluck, d ) {
-            return D3Interpolator.app.get('majorMusicTransformArray')[
-                Math.round(d3.interpolate( 0,32 ) (
-                    this.getPercentage(d[pluck], max)))
-            ] || 0;
-        },
-
         createColumn: function(data, attributes){
             var pluck = attributes["pluck"];
             var colorInterp = attributes["interp"];
 
             var max = this.getMax(data, pluck);
-
-            var scaleinterp = d3.interpolate(1,32);
 
             var textFunction = _.bind(
                 _.partial(this.model.get('textGenerator'), max, pluck),
@@ -74,7 +70,6 @@ D3Interpolator.Views = D3Interpolator.Views || {};
                 .attr( "class", "day" )
                 .style( "width", "100%" )
                 .style( "height", this.model.get( 'divHeight' ) )
-            //.text( function( d ) {return d.cleanDate; } )
                 .text ( _.bind( textFunction, this ) )
                 .style("background-color", _.bind( function(d) {
                     return colorInterp(this.getPercentage(d[pluck], max) );

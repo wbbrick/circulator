@@ -54,6 +54,14 @@ D3Interpolator.Models = D3Interpolator.Models || {};
             textGenerator: function( max, pluck, d ) {return ""; }
         },
 
+        setTextMode: function(mode) {
+            if(mode == 'date') {
+                this.set('textGenerator', this.dateGenerator);
+            } else {
+                this.set('textGenerator', this.noteGenerator);
+            }
+        },
+
         validate: function(attrs, options) {
         },
 
