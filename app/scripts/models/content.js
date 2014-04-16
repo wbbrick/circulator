@@ -27,6 +27,7 @@ D3Interpolator.Models = D3Interpolator.Models || {};
         },
 
         defaults: {
+            data: new D3Interpolator.Collections.Data(),
             attributes: [
                 {
                     "pluck" : "orangeaverage",
