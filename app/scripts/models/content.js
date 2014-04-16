@@ -7,24 +7,40 @@ D3Interpolator.Models = D3Interpolator.Models || {};
 
     D3Interpolator.Models.Content = Backbone.Model.extend({
         initialize: function() {
-            this.set('textGenerator', this.dateGenerator);
+            this.set('textGenerator',
+                     this.generatorValidator( this.blankGenerator ) );
         },
 
-        dateGenerator: function ( max, pluck, d ) {
-            if(d) {
-                return d.cleanDate || '';
-            }
-            return '';
+        generatorValidator: function( func ) {
+            return _.partial(function( func ) {
+                if(arguments[1]) {
+                    return func( _.rest( arguments ) );
+                }
+                return '0';
+            }, func);
         },
 
-        noteGenerator: function ( max, pluck, d ) {
-            if(d) {
-                return D3Interpolator.app.get('majorMusicTransformArray')[
-                    Math.round(d3.interpolate( 0,32 ) (
-                        this.getPercentage(d[pluck], max)))
-                ] || 0;
-            }
+        //linkGenrator
+
+        dateGenerator: function ( ) {
+            return arguments[0][2].cleanDate || '0';
         },
+
+        numberGenerator: function (  ) {
+            var d = arguments[0][2],
+            pluck = arguments[0][1]
+            return d[pluck] || '0';
+        },
+
+        noteGenerator: function (  ) {
+            var d = arguments[0][2],
+            pluck = arguments[0][1],
+            max = arguments[0][0];
+            return D3Interpolator.app.get('majorMusicTransformArray')[
+                Math.round( d3.interpolate( 0,32 ) ( d[pluck] / max ) ) ] || 0;
+        },
+
+        blankGenerator: function( max, pluck, d ) {return ""; },
 
         defaults: {
             data: new D3Interpolator.Collections.Data(),
@@ -52,14 +68,24 @@ D3Interpolator.Models = D3Interpolator.Models || {};
                 }
             ],
             divHeight: 'auto',
-            textGenerator: function( max, pluck, d ) {return ""; }
+            divMinHeight: '2px'
         },
+
+
 
         setTextMode: function(mode) {
             if(mode == 'date') {
-                this.set('textGenerator', this.dateGenerator);
+                this.set('textGenerator',
+                         this.generatorValidator( this.dateGenerator ) );
+            } else if(mode == 'number') {
+                this.set('textGenerator',
+                         this.generatorValidator( this.numberGenerator ) );
+            } else if(mode == 'note') {
+                this.set('textGenerator',
+                         this.generatorValidator( this.noteGenerator ) );
             } else {
-                this.set('textGenerator', this.noteGenerator);
+                this.set('textGenerator',
+                         this.generatorValidator( this.blankGenerator ) );
             }
         },
 

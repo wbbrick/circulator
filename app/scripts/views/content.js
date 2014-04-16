@@ -70,12 +70,13 @@ D3Interpolator.Views = D3Interpolator.Views || {};
                 .attr( "class", "day" )
                 .style( "width", "100%" )
                 .style( "height", this.model.get( 'divHeight' ) )
+                .style( "min-height", this.model.get( 'divMinHeight' ) )
                 .text ( _.bind( textFunction, this ) )
                 .style("background-color", _.bind( function(d) {
                     return colorInterp(this.getPercentage(d[pluck], max) );
                 }, this ) )
             ;
-
+            /* this was kind of annoying
             $('div .day').tipsy({
                 gravity: 'w',
                 //html: true,
@@ -83,7 +84,7 @@ D3Interpolator.Views = D3Interpolator.Views || {};
                     var d = this.__data__;
                     return d['cleanDate'];
                 }
-            });
+            });*/
         },
 
         display: function() {
