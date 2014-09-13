@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 d3-interpolator
 ===============
 
@@ -20,3 +21,9 @@ grunt server
 </pre>
 in the same installation directory to run a preview server at http://localhost:9000.
 
+=======
+circulator
+==========
+
+Charm City Circulator stats viewer
+>>>>>>> 0ff9fd25a6f6859fc9b3c930afdecc9d4749854f
