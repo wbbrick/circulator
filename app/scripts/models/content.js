@@ -20,7 +20,10 @@ D3Interpolator.Models = D3Interpolator.Models || {};
             }, func);
         },
 
-        //linkGenrator
+        linkGenerator: function( ) {
+            var d = arguments[0][1];
+            console.log(d);
+        },
 
         dateGenerator: function ( ) {
             return arguments[0][2].cleanDate || '0';

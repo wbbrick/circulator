@@ -59,8 +59,7 @@ D3Interpolator.Views = D3Interpolator.Views || {};
             var max = this.getMax(data, pluck);
 
             var textFunction = _.bind(
-                _.partial(this.model.get('textGenerator'), max, pluck),
-                this
+                _.partial(this.model.get('textGenerator'), max, pluck), this
             );
 
             d3.select("#" + pluck).selectAll("div")
@@ -71,7 +70,7 @@ D3Interpolator.Views = D3Interpolator.Views || {};
                 .style( "width", "100%" )
                 .style( "height", this.model.get( 'divHeight' ) )
                 .style( "min-height", this.model.get( 'divMinHeight' ) )
-                .text ( _.bind( textFunction, this ) )
+                .text ( textFunction )
                 .style("background-color", _.bind( function(d) {
                     return colorInterp(this.getPercentage(d[pluck], max) );
                 }, this ) )
