@@ -11,7 +11,8 @@ module.exports = (function () {
 		    this.set(
 		        'textGenerator',
 		        this.generatorValidator( this.blankGenerator )
-	        );
+		    );
+		    _.bindAll( this, 'noteGenerator' );
         },
 
         generatorValidator: function( func ) {

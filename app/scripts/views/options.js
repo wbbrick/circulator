@@ -32,7 +32,6 @@ module.exports = (function () {
 
 		initialize: function ( options ) {
 			this.model = options.model;
-			this.model = new ContentModel( { 'model' : this.model } );
             this.listenTo( this.model, 'change', this.render );
         },
 

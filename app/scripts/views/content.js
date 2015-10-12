@@ -79,11 +79,10 @@ module.exports = (function () {
         display: function() {
             var data = this.model.get( 'data' ).toJSON();
             var dataColumn = _.partial(this.createColumn, data);
-	        debugger;
-            _.each( this.model.get( 'attributes' ),
-                    _.bind(dataColumn, this
-                    )
-                  );
+	        _.each(
+		        this.model.get( 'attributes' ),
+		        _.bind( dataColumn, this )
+	        );
         }
 
     });
