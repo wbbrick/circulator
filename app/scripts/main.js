@@ -1,24 +1,15 @@
-/*global D3Interpolator, $*/
+let ContentView = require('./views/content');
+let Backbone = require('backbone');
+let $ = require('jquery');
+require( '../../node_modules/tipsy/src/javascripts/jquery.tipsy.js' );
 
-
-window.D3Interpolator = {
-    Models: {},
-    Collections: {},
-    Views: {},
-    Routers: {},
-    init: function () {
-        'use strict';
-        console.log('Hello from Backbone!');
-        D3Interpolator.app = new D3Interpolator.Models.App();
-
-        D3Interpolator.app.router = new D3Interpolator.Routers.Routes( {
-            pushState: true,
-            root: "/" } );
-        Backbone.history.start();
-    }
-};
+require( '../styles/main.css' );
+require( '../../node_modules/bootstrap/dist/css/bootstrap.css' );
+require( '../../node_modules/tipsy/src/stylesheets/tipsy.css' );
 
 $(document).ready(function () {
-    'use strict';
-    D3Interpolator.init();
+	'use strict';
+	let contentView = new ContentView();
+	contentView.setElement( "#content" ).render();
 });
+

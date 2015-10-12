@@ -1,14 +1,18 @@
-/*global D3Interpolator, Backbone*/
+let Backbone = require('backbone');
+let $ = require('jquery');
+let DataCollection = require('../collections/data');
+let d3 = require('d3');
+let _ = require('underscore');
 
-D3Interpolator.Models = D3Interpolator.Models || {};
-
-(function () {
+module.exports = (function () {
     'use strict';
-
-    D3Interpolator.Models.Content = Backbone.Model.extend({
-        initialize: function() {
-            this.set('textGenerator',
-                     this.generatorValidator( this.blankGenerator ) );
+    return Backbone.Model.extend({
+	    initialize: function( options ) {
+		    this.model = options.model;
+	        this.set(
+		        'textGenerator',
+		        this.generatorValidator( this.blankGenerator )
+	        );
         },
 
         generatorValidator: function( func ) {
@@ -31,7 +35,7 @@ D3Interpolator.Models = D3Interpolator.Models || {};
 
         numberGenerator: function (  ) {
             var d = arguments[0][2],
-            pluck = arguments[0][1]
+                pluck = arguments[0][1];
             return d[pluck] || '0';
         },
 
@@ -39,14 +43,14 @@ D3Interpolator.Models = D3Interpolator.Models || {};
             var d = arguments[0][2],
             pluck = arguments[0][1],
             max = arguments[0][0];
-            return D3Interpolator.app.get('majorMusicTransformArray')[
+            return this.model.get('majorMusicTransformArray')[
                 Math.round( d3.interpolate( 0,32 ) ( d[pluck] / max ) ) ] || 0;
         },
 
         blankGenerator: function( max, pluck, d ) {return ""; },
 
         defaults: {
-            data: new D3Interpolator.Collections.Data(),
+            data: new DataCollection(),
             attributes: [
                 {
                     "pluck" : "orangeaverage",
@@ -73,8 +77,6 @@ D3Interpolator.Models = D3Interpolator.Models || {};
             divHeight: 'auto',
             divMinHeight: '2px'
         },
-
-
 
         setTextMode: function(mode) {
             if(mode == 'date') {

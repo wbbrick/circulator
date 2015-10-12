@@ -1,13 +1,12 @@
-/*global D3Interpolator, Backbone, JST*/
+let Backbone = require('backbone');
+let $ = require('jquery');
+let ContentModel = require('../models/content');
 
-D3Interpolator.Views = D3Interpolator.Views || {};
-
-(function () {
+module.exports = (function () {
     'use strict';
+	return Backbone.View.extend({
 
-    D3Interpolator.Views.ContentOptions = Backbone.View.extend({
-
-        template: JST['app/scripts/templates/ContentOptions.ejs'],
+	    template: require( '../templates/options.ejs' ),
 
         tagName: 'div',
 
@@ -31,13 +30,14 @@ D3Interpolator.Views = D3Interpolator.Views || {};
             }
         },
 
-        initialize: function (mod) {
-            this.model = mod;
-            this.listenTo(this.model, 'change', this.render);
+		initialize: function ( options ) {
+			this.model = options.model;
+			this.model = new ContentModel( { 'model' : this.model } );
+            this.listenTo( this.model, 'change', this.render );
         },
 
         render: function () {
-            this.$el.html(this.template(this.model.toJSON()));
+            this.$el.html( this.template( this.model.toJSON() ) );
             return this;
         }
 
