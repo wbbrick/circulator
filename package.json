@@ -6,8 +6,7 @@
     "bootstrap": "^3.3.5",
     "d3": "^3.5.6",
     "jquery": "^2.1.4",
-    "lodash": "^3.10.1",
-    "tipsy": "^1.0.0"
+    "lodash": "^3.10.1"
   },
   "devDependencies": {
     "babelify": "^6.3.0",

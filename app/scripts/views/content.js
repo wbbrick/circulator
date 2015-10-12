@@ -1,15 +1,16 @@
 let Backbone = require('backbone');
 let $ = require('jquery');
 let _ = require('underscore');
-let AppModel = require('../models/app');
+let ContentModel = require('../models/content');
 let OptionsView = require('./options');
+let d3 = require('d3');
 
 module.exports = (function () {
     'use strict';
     return Backbone.View.extend({
 	    template: require( '../templates/content.ejs' ),
 
-	    model: new AppModel(),
+	    model: new ContentModel(),
 
         tagName: 'div',
 
@@ -72,23 +73,13 @@ module.exports = (function () {
                 .text ( textFunction )
                 .style("background-color", _.bind( function(d) {
                     return colorInterp(this.getPercentage(d[pluck], max) );
-                }, this ) )
-            ;
-            /* this was kind of annoying
-            $('div .day').tipsy({
-                gravity: 'w',
-                //html: true,
-                title: function() {
-                    var d = this.__data__;
-                    return d['cleanDate'];
-                }
-            });*/
+                }, this ) );
         },
 
         display: function() {
             var data = this.model.get( 'data' ).toJSON();
             var dataColumn = _.partial(this.createColumn, data);
-
+	        debugger;
             _.each( this.model.get( 'attributes' ),
                     _.bind(dataColumn, this
                     )
